@@ -14,12 +14,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="redis-like" target="1.5" />
-      <module name="redis-like-common" target="1.5" />
-      <module name="redis-like-dao" target="1.5" />
-      <module name="redis-like-model" target="1.5" />
-      <module name="redis-like-service" target="1.5" />
-      <module name="redis-like-web" target="1.5" />
+      <module name="redis-like" target="8" />
+      <module name="redis-like-common" target="8" />
+      <module name="redis-like-dao" target="8" />
+      <module name="redis-like-model" target="8" />
+      <module name="redis-like-service" target="8" />
+      <module name="redis-like-web" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

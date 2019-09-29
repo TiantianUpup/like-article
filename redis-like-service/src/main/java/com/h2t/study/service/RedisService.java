@@ -1,5 +1,8 @@
 package com.h2t.study.service;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * redis服务接口
  *
@@ -41,4 +44,12 @@ public interface RedisService {
      * @return
      * */
     Long countUserLike(Long userId);
+
+    /**
+     * 获取用户点赞的文章
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    List<Long> getUserLikeArticleIds(Long userId);
 }
