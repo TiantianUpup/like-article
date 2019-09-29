@@ -27,10 +27,18 @@ public interface RedisService {
     Long unlikeArticle(Long articleId, Long userId);
 
     /**
-     * 统计点赞数
+     * 统计某篇文章总点赞数
      *
      * @param articleId
      * @return
-     * */
+     */
     Long countArticleLike(Long articleId);
+
+    /**
+     * 统计用户总的文章点赞数
+     *
+     * @param userId
+     * @return
+     * */
+    Long countUserLike(Long userId);
 }

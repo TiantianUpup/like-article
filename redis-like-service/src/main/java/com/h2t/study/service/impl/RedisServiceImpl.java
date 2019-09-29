@@ -18,17 +18,28 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate redisTemplate;
 
     /**
-     * 用户点赞某篇文章
+     * 用户点赞某篇文章 TODO 事务需要考虑、分布式部署是不是需考虑分布式事务
      *
      * @param userId 用户ID
      * @param articleId 文章ID
      * @return
      */
-    public Long likeArticle(Long userId, Long articleId) {
+    public Long likeArticle(Long articleId, Long userId) {
         if (null == userId || null == articleId) {
             throw new CustomException(ErrorCodeEnum.Param_can_not_null);
         }
 
+        //1.用户总点赞数+1
+        //TODO 并发需要考虑 ==null
+        if (redisTemplate.opsForValue().get(userId) == null) {
+            redisTemplate.opsForValue().set(String.valueOf(userId), "1");
+        } else {
+            //TODO 并发问题
+            Long count = (Long)redisTemplate.opsForValue().get(String.valueOf(userId));
+            redisTemplate.opsForValue().set(String.valueOf(userId), String.valueOf(count++));
+
+        }
+        //2.文章点赞数+1
         return redisTemplate.opsForSet().add(String.valueOf(articleId), String.valueOf(userId));
     }
 
@@ -39,17 +50,32 @@ public class RedisServiceImpl implements RedisService {
      * @param articleId 文章ID
      * @return
      */
-    public Long unlikeArticle(Long userId, Long articleId) {
+    public Long unlikeArticle(Long articleId, Long userId) {
+        //TODO 理论上不存在并发问题，用户只能取消自己的点赞数
+        //1.用户总点赞数-1
+        Long count = (Long)redisTemplate.opsForValue().get(userId);
+        redisTemplate.opsForValue().set(String.valueOf(userId), String.valueOf(count--));
+        //2.取消用户某篇文章的点赞数
         return redisTemplate.opsForSet().remove(String.valueOf(articleId), String.valueOf(userId));
     }
 
     /**
-     * 统计点赞数
+     * 统计某篇文章总点赞数
      *
      * @param articleId
      * @return
      */
     public Long countArticleLike(Long articleId) {
-        return redisTemplate.opsForSet().size(articleId);
+        return redisTemplate.opsForSet().size(String.valueOf(articleId));
+    }
+
+    /**
+     * 统计用户总的文章点赞数
+     *
+     * @param userId
+     * @return
+     */
+    public Long countUserLike(Long userId) {
+        return redisTemplate.opsForSet().size(String.valueOf(userId));
     }
 }

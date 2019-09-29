@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/aspect/ResponseAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/aspect/ResponseAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/enums/ErrorCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/enums/ErrorCodeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/exception/CustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/exception/CustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/handler/ResponseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/handler/ResponseHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/redis-like-service/target/" />
     <ignored path="$PROJECT_DIR$/redis-like-web/target/" />
@@ -49,14 +44,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="277" />
+          <entry key="java" value="852" />
           <entry key="properties" value="17" />
+          <entry key="txt" value="33" />
           <entry key="xml" value="41" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="277" />
+          <entry key="JAVA" value="852" />
+          <entry key="PLAIN_TEXT" value="33" />
           <entry key="Properties" value="17" />
           <entry key="XML" value="41" />
         </counts>
@@ -86,12 +83,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="38" column="28" lean-forward="true" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+            <state relative-caret-position="-1020">
+              <caret line="26" column="55" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1200#1201#0" expanded="true" />
                 <element signature="e#1236#1237#0" expanded="true" />
+                <element signature="e#1472#1473#0" expanded="true" />
+                <element signature="e#1499#1500#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -139,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+            <state relative-caret-position="623">
+              <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -368,7 +367,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569747753569" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569754368475" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/redis-like" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -414,12 +413,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569745884085</updated>
-      <workItem from="1569745886538" duration="3157000" />
+      <workItem from="1569745886538" duration="4345000" />
     </task>
+    <task id="LOCAL-00001" summary="article like count module">
+      <created>1569753572443</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569753572443</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3157000" />
+    <option name="totallyTimeSpent" value="4345000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -436,6 +443,7 @@
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="bottom" id="JProfiler" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -462,6 +470,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="article like count module" />
+    <option name="LAST_COMMIT_MESSAGE" value="article like count module" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/controller/TestController.java">
@@ -577,19 +589,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+        <state relative-caret-position="623">
+          <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="38" column="28" lean-forward="true" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+        <state relative-caret-position="-1020">
+          <caret line="26" column="55" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1200#1201#0" expanded="true" />
             <element signature="e#1236#1237#0" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1499#1500#0" expanded="true" />
           </folding>
         </state>
       </provider>
