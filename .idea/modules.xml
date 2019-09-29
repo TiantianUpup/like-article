@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/redis-like.iml" filepath="$PROJECT_DIR$/redis-like.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-like-common/redis-like-common.iml" filepath="$PROJECT_DIR$/redis-like-common/redis-like-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-like-dao/redis-like-dao.iml" filepath="$PROJECT_DIR$/redis-like-dao/redis-like-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-like-model/redis-like-model.iml" filepath="$PROJECT_DIR$/redis-like-model/redis-like-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-like-service/redis-like-service.iml" filepath="$PROJECT_DIR$/redis-like-service/redis-like-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-like-web/redis-like-web.iml" filepath="$PROJECT_DIR$/redis-like-web/redis-like-web.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="redis-like-common" />
+        <module name="redis-like-dao" />
+        <module name="redis-like-model" />
+        <module name="redis-like-service" />
+        <module name="redis-like-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="redis-like" target="1.5" />
+      <module name="redis-like-common" target="1.5" />
+      <module name="redis-like-dao" target="1.5" />
+      <module name="redis-like-model" target="1.5" />
+      <module name="redis-like-service" target="1.5" />
+      <module name="redis-like-web" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
