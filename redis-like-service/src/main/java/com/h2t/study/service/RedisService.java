@@ -1,7 +1,7 @@
 package com.h2t.study.service;
 
 /**
- * TODO Description
+ * redis服务接口
  *
  * @author hetiantian
  * @version 1.0
@@ -15,5 +15,22 @@ public interface RedisService {
      * @param articleId 文章ID
      * @return
      */
-    Long likeArticle(Long userId, Long articleId);
+    Long likeArticle(Long articleId, Long userId);
+
+    /**
+     * 取消点赞
+     *
+     * @param userId 用户ID
+     * @param articleId 文章ID
+     * @return
+     */
+    Long unlikeArticle(Long articleId, Long userId);
+
+    /**
+     * 统计点赞数
+     *
+     * @param articleId
+     * @return
+     * */
+    Long countArticleLike(Long articleId);
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ResponseAspect {
-    @Around("execution(* yourpackage.controller..*(..))")
+    @Around("execution(* com.h2t.study.controller..*(..))")
     public Object controllerProcess(ProceedingJoinPoint pjd) throws Throwable {
         Object result = pjd.proceed();
         //如果controller不返回结果

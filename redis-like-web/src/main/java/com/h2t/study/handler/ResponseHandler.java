@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 @ResponseBody
 public class ResponseHandler {
-    private static Logger logger = LoggerFactory.getLogger(com.h2t.study.handler.ResponseHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(ResponseHandler.class);
 
-    @ExceptionHandler({com.h2t.study.exception.CustomException.class})
+    @ExceptionHandler({CustomException.class})
     public BaseResponse customException(CustomException e, HttpServletRequest request) {
         logger.error(request.getRequestURI() + ":服务运行异常",e);
         return BaseResponse.fail(e.getErrorCodeEnum().getErrorCode(), e.getErrorCodeEnum().getErrorMsg());

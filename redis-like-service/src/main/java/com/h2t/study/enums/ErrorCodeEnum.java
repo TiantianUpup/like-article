@@ -12,7 +12,8 @@ public enum ErrorCodeEnum {
      * 错误码
      * */
     Param_does_not_exist("0001","查找参数不存在"),
-    Param_does_not_correct("0002","所传参数格式不正确");
+    Param_does_not_correct("0002","所传参数格式不正确"),
+    Param_can_not_null("0003", "传参不为null");
 
     ErrorCodeEnum(String errorCode, String errorMsg) {
         this.errorCode = errorCode;
