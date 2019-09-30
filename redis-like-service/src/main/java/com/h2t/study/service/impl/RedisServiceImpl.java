@@ -3,12 +3,11 @@ package com.h2t.study.service.impl;
 import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
@@ -23,24 +22,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class RedisServiceImpl implements RedisService {
+    Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
+
     @Resource
     private RedisTemplate redisTemplate;
 
-    private ValueOperations<String, String> valueOperations;
-
-    private SetOperations<String, String> setOperations;
-
     /**
-     * 初始化valueOperations、setOperations
-     */
-    @PostConstruct
-    public void init() {
-        valueOperations = redisTemplate.opsForValue();
-        setOperations = redisTemplate.opsForSet();
-    }
-
-    /**
-     * 用户点赞某篇文章 TODO 事务需要考虑、分布式部署是不是需考虑分布式事务
+     * 用户点赞某篇文章 TODO 分布式部署是不是需考虑分布式事务、分布式锁
      *
      * @param userId 用户ID
      * @param articleId 文章ID
@@ -49,46 +37,64 @@ public class RedisServiceImpl implements RedisService {
     public Long likeArticle(Long articleId, Long userId) {
         validateParam(articleId, userId);
 
+        Long result = 0L;
         //1.用户总点赞数+1
-        //TODO 并发需要考虑 ==null
-        if (valueOperations.get(userId) == null) {
-            valueOperations.set(String.valueOf(userId), "1");
-        } else {
-            valueOperations.increment(String.valueOf(userId), 1);
+        try {
+            redisTemplate.multi();  //开启事务
+            if (redisTemplate.opsForValue().get(userId) == null) {
+                redisTemplate.opsForValue().set(String.valueOf(userId), "1");
+            } else {
+                redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
 
+            }
+            //2.用户喜欢的文章+1
+            redisTemplate.opsForSet().add(String.format("user_%d", userId), String.valueOf(articleId));
+            //3.文章点赞数+1
+            result = redisTemplate.opsForSet().add(String.valueOf(articleId), String.valueOf(userId));
+            redisTemplate.exec();  //执行事务
+        } catch (Exception e) {
+            logger.error("点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
         }
-        //2.用户喜欢的文章+1
-        setOperations.add(String.format("user_%d", userId), String.valueOf(articleId));
-        //3.文章点赞数+1
-        return setOperations.add(String.valueOf(articleId), String.valueOf(userId));
+
+        return result;
     }
 
     /**
-     * 取消点赞 TODO 事务
+     * 取消点赞
      *
      * @param userId    用户ID
      * @param articleId 文章ID
      * @return
      */
     public Long unlikeArticle(Long articleId, Long userId) {
-        validateParam(articleId, userId);
-        //1.用户总点赞数-1
-        valueOperations.decrement(String.valueOf(userId), 1);
-        //2.用户喜欢的文章-1
-        setOperations.remove(String.format("user_%d", userId), String.valueOf(articleId));
-        //3.取消用户某篇文章的点赞数
-        return setOperations.remove(String.valueOf(articleId), String.valueOf(userId));
+        Long result = 0L;
+        try {
+            redisTemplate.multi();  //开启事务
+            validateParam(articleId, userId);
+            //1.用户总点赞数-1
+            redisTemplate.opsForValue().decrement(String.valueOf(userId), 1);
+            //2.用户喜欢的文章-1
+            redisTemplate.opsForSet().remove(String.format("user_%d", userId), String.valueOf(articleId));
+            //3.取消用户某篇文章的点赞数
+            result = redisTemplate.opsForSet().remove(String.valueOf(articleId), String.valueOf(userId));
+            redisTemplate.exec(); //执行命令
+        } catch (Exception e) {
+            logger.error("取消点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
+            redisTemplate.discard();
+        }
+
+        return result;
     }
 
     /**
      * 统计某篇文章总点赞数
      *
-     * @param articleId
+     * @param articleId 文章ID
      * @return
      */
     public Long countArticleLike(Long articleId) {
         validateParam(articleId);
-        return setOperations.size(String.valueOf(articleId));
+        return redisTemplate.opsForSet().size(String.valueOf(articleId));
     }
 
     /**
@@ -99,7 +105,7 @@ public class RedisServiceImpl implements RedisService {
      */
     public Long countUserLike(Long userId) {
         validateParam(userId);
-        return setOperations.size(String.valueOf(userId));
+        return redisTemplate.opsForSet().size(String.valueOf(userId));
     }
 
     /**
@@ -111,7 +117,7 @@ public class RedisServiceImpl implements RedisService {
     public List<Long> getUserLikeArticleIds(Long userId) {
         validateParam(userId);
         String userKey = String.format("user_%d", userId);
-        Set<String> articleIdSet = setOperations.members(userKey);
+        Set<String> articleIdSet = redisTemplate.opsForSet().members(userKey);
         return articleIdSet.stream()
                 .map(s -> Long.parseLong(s)).collect(Collectors.toList());
     }
@@ -125,6 +131,7 @@ public class RedisServiceImpl implements RedisService {
     private void validateParam(Long... params) {
         for (Long param : params) {
             if (null == param) {
+                logger.error("入参存在null值");
                 throw new CustomException(ErrorCodeEnum.Param_can_not_null);
             }
         }
