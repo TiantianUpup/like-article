@@ -4,10 +4,12 @@ import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,7 +23,21 @@ import java.util.stream.Collectors;
  */
 @Service
 public class RedisServiceImpl implements RedisService {
+    @Resource
     private RedisTemplate redisTemplate;
+
+    private ValueOperations<String, String> valueOperations;
+
+    private SetOperations<String, String> setOperations;
+
+    /**
+     * 初始化valueOperations、setOperations
+     */
+    @PostConstruct
+    public void init() {
+        valueOperations = redisTemplate.opsForValue();
+        setOperations = redisTemplate.opsForSet();
+    }
 
     /**
      * 用户点赞某篇文章 TODO 事务需要考虑、分布式部署是不是需考虑分布式事务
@@ -37,18 +53,18 @@ public class RedisServiceImpl implements RedisService {
 
         //1.用户总点赞数+1
         //TODO 并发需要考虑 ==null
-        if (redisTemplate.opsForValue().get(userId) == null) {
-            redisTemplate.opsForValue().set(String.valueOf(userId), "1");
+        if (valueOperations.get(userId) == null) {
+            valueOperations.set(String.valueOf(userId), "1");
         } else {
             //TODO 并发问题
-            Long count = (Long)redisTemplate.opsForValue().get(String.valueOf(userId));
-            redisTemplate.opsForValue().set(String.valueOf(userId), String.valueOf(count++));
+            Long count = Long.parseLong(valueOperations.get(String.valueOf(userId)));
+            valueOperations.set(String.valueOf(userId), String.valueOf(count++));
 
         }
         //2.用户喜欢的文章+1
-        redisTemplate.opsForSet().add(String.format("%slike", userId), String.valueOf(articleId));
+        setOperations.add(String.format("%slike", userId), String.valueOf(articleId));
         //3.文章点赞数+1
-        return redisTemplate.opsForSet().add(String.valueOf(articleId), String.valueOf(userId));
+        return setOperations.add(String.valueOf(articleId), String.valueOf(userId));
     }
 
     /**
@@ -61,12 +77,12 @@ public class RedisServiceImpl implements RedisService {
     public Long unlikeArticle(Long articleId, Long userId) {
         //TODO 理论上不存在并发问题，用户只能取消自己的点赞数
         //1.用户总点赞数-1
-        Long count = (Long)redisTemplate.opsForValue().get(userId);
-        redisTemplate.opsForValue().set(String.valueOf(userId), String.valueOf(count--));
+        Long count = Long.parseLong(valueOperations.get(userId));
+        valueOperations.set(String.valueOf(userId), String.valueOf(count--));
         //2.用户喜欢的文章-1
-        redisTemplate.opsForSet().remove(String.format("%slike", userId), String.valueOf(articleId));
+        setOperations.remove(String.format("%slike", userId), String.valueOf(articleId));
         //3.取消用户某篇文章的点赞数
-        return redisTemplate.opsForSet().remove(String.valueOf(articleId), String.valueOf(userId));
+        return setOperations.remove(String.valueOf(articleId), String.valueOf(userId));
     }
 
     /**
@@ -76,7 +92,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long countArticleLike(Long articleId) {
-        return redisTemplate.opsForSet().size(String.valueOf(articleId));
+        return setOperations.size(String.valueOf(articleId));
     }
 
     /**
@@ -86,7 +102,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long countUserLike(Long userId) {
-        return redisTemplate.opsForSet().size(String.valueOf(userId));
+        return setOperations.size(String.valueOf(userId));
     }
 
     /**
@@ -97,7 +113,7 @@ public class RedisServiceImpl implements RedisService {
      */
     public List<Long> getUserLikeArticleIds(Long userId) {
         String userKey = String.format("%slike", userId);
-        Set<String> articleIdSet = redisTemplate.opsForSet().members(userKey);
+        Set<String> articleIdSet = setOperations.members(userKey);
         return articleIdSet.stream()
                 .map(s -> Long.parseLong(s)).collect(Collectors.toList());
     }
