@@ -39,14 +39,17 @@ public class RedisServiceImpl implements RedisService {
 
         Long result = 0L;
         //1.用户总点赞数+1
-        try {
-            redisTemplate.multi();  //开启事务
-            if (redisTemplate.opsForValue().get(userId) == null) {
-                redisTemplate.opsForValue().set(String.valueOf(userId), "1");
-            } else {
-                redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
+        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.multi();  //开启事务
 
-            }
+        try {
+//            if (redisTemplate.opsForValue().get(userId) == null) {
+//                redisTemplate.opsForValue().set(String.valueOf(userId), "1");
+//            } else {
+//                redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
+//
+//            }
+            redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
             //2.用户喜欢的文章+1
             redisTemplate.opsForSet().add(String.format("user_%d", userId), String.valueOf(articleId));
             //3.文章点赞数+1
@@ -54,6 +57,8 @@ public class RedisServiceImpl implements RedisService {
             redisTemplate.exec();  //执行事务
         } catch (Exception e) {
             logger.error("点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
+            redisTemplate.discard();  //回滚
+            throw e;
         }
 
         return result;
@@ -67,10 +72,10 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long unlikeArticle(Long articleId, Long userId) {
+        validateParam(articleId, userId);
         Long result = 0L;
+        redisTemplate.multi();  //开启事务
         try {
-            redisTemplate.multi();  //开启事务
-            validateParam(articleId, userId);
             //1.用户总点赞数-1
             redisTemplate.opsForValue().decrement(String.valueOf(userId), 1);
             //2.用户喜欢的文章-1
@@ -81,6 +86,7 @@ public class RedisServiceImpl implements RedisService {
         } catch (Exception e) {
             logger.error("取消点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
             redisTemplate.discard();
+            throw e;
         }
 
         return result;

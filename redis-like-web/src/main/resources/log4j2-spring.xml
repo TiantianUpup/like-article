@@ -2,8 +2,8 @@
 
 <Configuration>
     <properties>
-        <property name="LOG_INFO_HOME">log\info</property>
-        <property name="LOG_ERROR_HOME">log\error</property>
+        <property name="LOG_INFO_HOME">.\log\info</property>
+        <property name="LOG_ERROR_HOME">.\log\error</property>
         <property name="PATTERN">%d [%t] %-5p [%c] - %m%n</property>
     </properties>
 
