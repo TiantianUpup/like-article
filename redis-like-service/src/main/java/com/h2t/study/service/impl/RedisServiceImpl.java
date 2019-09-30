@@ -56,9 +56,7 @@ public class RedisServiceImpl implements RedisService {
         if (valueOperations.get(userId) == null) {
             valueOperations.set(String.valueOf(userId), "1");
         } else {
-            //TODO 并发问题
-            Long count = Long.parseLong(valueOperations.get(String.valueOf(userId)));
-            valueOperations.set(String.valueOf(userId), String.valueOf(count++));
+            valueOperations.increment(String.valueOf(userId), 1);
 
         }
         //2.用户喜欢的文章+1
@@ -75,10 +73,8 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long unlikeArticle(Long articleId, Long userId) {
-        //TODO 理论上不存在并发问题，用户只能取消自己的点赞数
         //1.用户总点赞数-1
-        Long count = Long.parseLong(valueOperations.get(userId));
-        valueOperations.set(String.valueOf(userId), String.valueOf(count--));
+        valueOperations.decrement(String.valueOf(userId), 1);
         //2.用户喜欢的文章-1
         setOperations.remove(String.format("%slike", userId), String.valueOf(articleId));
         //3.取消用户某篇文章的点赞数
