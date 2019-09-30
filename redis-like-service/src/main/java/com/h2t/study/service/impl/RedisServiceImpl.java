@@ -47,9 +47,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long likeArticle(Long articleId, Long userId) {
-        if (null == userId || null == articleId) {
-            throw new CustomException(ErrorCodeEnum.Param_can_not_null);
-        }
+        validateParam(articleId, userId);
 
         //1.用户总点赞数+1
         //TODO 并发需要考虑 ==null
@@ -60,7 +58,7 @@ public class RedisServiceImpl implements RedisService {
 
         }
         //2.用户喜欢的文章+1
-        setOperations.add(String.format("%slike", userId), String.valueOf(articleId));
+        setOperations.add(String.format("user_%d", userId), String.valueOf(articleId));
         //3.文章点赞数+1
         return setOperations.add(String.valueOf(articleId), String.valueOf(userId));
     }
@@ -73,10 +71,11 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long unlikeArticle(Long articleId, Long userId) {
+        validateParam(articleId, userId);
         //1.用户总点赞数-1
         valueOperations.decrement(String.valueOf(userId), 1);
         //2.用户喜欢的文章-1
-        setOperations.remove(String.format("%slike", userId), String.valueOf(articleId));
+        setOperations.remove(String.format("user_%d", userId), String.valueOf(articleId));
         //3.取消用户某篇文章的点赞数
         return setOperations.remove(String.valueOf(articleId), String.valueOf(userId));
     }
@@ -88,6 +87,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long countArticleLike(Long articleId) {
+        validateParam(articleId);
         return setOperations.size(String.valueOf(articleId));
     }
 
@@ -98,6 +98,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public Long countUserLike(Long userId) {
+        validateParam(userId);
         return setOperations.size(String.valueOf(userId));
     }
 
@@ -108,9 +109,24 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public List<Long> getUserLikeArticleIds(Long userId) {
-        String userKey = String.format("%slike", userId);
+        validateParam(userId);
+        String userKey = String.format("user_%d", userId);
         Set<String> articleIdSet = setOperations.members(userKey);
         return articleIdSet.stream()
                 .map(s -> Long.parseLong(s)).collect(Collectors.toList());
+    }
+
+    /**
+     * 入参验证
+     *
+     * @param params
+     * @throws CustomException
+     */
+    private void validateParam(Long... params) {
+        for (Long param : params) {
+            if (null == param) {
+                throw new CustomException(ErrorCodeEnum.Param_can_not_null);
+            }
+        }
     }
 }
