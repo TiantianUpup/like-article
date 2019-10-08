@@ -30,10 +30,11 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate redisTemplate;
 
     /**
-     * 指定序列化方式
+     * 指定序列化方式、开启事务
      */
     @PostConstruct
     public void init() {
+        redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setValueSerializer(new StringRedisSerializer());
     }
 
@@ -45,23 +46,24 @@ public class RedisServiceImpl implements RedisService {
      * @param articleId 文章ID
      * @return
      */
-    public Long likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
+    public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);
 
-        Long result;
-        //redisTemplate.multi();  //开启事务
+        List<Long> result;
+
+        redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数+1
             redisTemplate.opsForValue().increment(String.valueOf(likedUserId), 1);
             //2.用户喜欢的文章+1
             redisTemplate.opsForSet().add(String.format("user_%d", likedPostId), String.valueOf(articleId));
             //3.文章点赞数+1
-            result = redisTemplate.opsForSet().add(String.format("article_%d", articleId), String.valueOf(likedPostId));
-            //redisTemplate.exec();  //执行事务
+            redisTemplate.opsForSet().add(String.format("article_%d", articleId), String.valueOf(likedPostId));
+            result = redisTemplate.exec();  //执行事务
         } catch (Exception e) {
             logger.error("点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
                     articleId, likedUserId, likedPostId, e.getMessage());
-            //redisTemplate.discard();  //回滚
+            redisTemplate.discard();  //回滚
             throw e;
         }
 
