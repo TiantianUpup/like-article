@@ -39,7 +39,7 @@ public class RedisServiceImpl implements RedisService {
     }
 
     /**
-     * 用户点赞某篇文章 TODO 分布式部署是不是需考虑分布式事务、分布式锁
+     * 用户点赞某篇文章
      *
      * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户

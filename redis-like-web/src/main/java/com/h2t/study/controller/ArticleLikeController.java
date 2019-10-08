@@ -13,8 +13,8 @@ import javax.annotation.Resource;
  * @Date 2019/09/30 15:31
  */
 @RestController
-@RequestMapping("/api/test")
-public class RedisServiceTestController {
+@RequestMapping("/api/article")
+public class ArticleLikeController {
     @Resource
     private RedisService redisService;
 
