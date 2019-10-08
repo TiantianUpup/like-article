@@ -6,8 +6,10 @@ import com.h2t.study.service.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
@@ -28,36 +30,38 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate redisTemplate;
 
     /**
+     * 指定序列化方式
+     */
+    @PostConstruct
+    public void init() {
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+    }
+
+    /**
      * 用户点赞某篇文章 TODO 分布式部署是不是需考虑分布式事务、分布式锁
      *
-     * @param userId 用户ID
+     * @param likedUserId 被点赞用户ID
+     * @param likedPostId 点赞用户
      * @param articleId 文章ID
      * @return
      */
-    public Long likeArticle(Long articleId, Long userId) {
-        validateParam(articleId, userId);
+    public Long likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
+        validateParam(articleId, likedUserId, likedPostId);
 
-        Long result = 0L;
-        //1.用户总点赞数+1
-        redisTemplate.setEnableTransactionSupport(true);
-        redisTemplate.multi();  //开启事务
-
+        Long result;
+        //redisTemplate.multi();  //开启事务
         try {
-//            if (redisTemplate.opsForValue().get(userId) == null) {
-//                redisTemplate.opsForValue().set(String.valueOf(userId), "1");
-//            } else {
-//                redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
-//
-//            }
-            redisTemplate.opsForValue().increment(String.valueOf(userId), 1);
+            //1.用户总点赞数+1
+            redisTemplate.opsForValue().increment(String.valueOf(likedUserId), 1);
             //2.用户喜欢的文章+1
-            redisTemplate.opsForSet().add(String.format("user_%d", userId), String.valueOf(articleId));
+            redisTemplate.opsForSet().add(String.format("user_%d", likedPostId), String.valueOf(articleId));
             //3.文章点赞数+1
-            result = redisTemplate.opsForSet().add(String.valueOf(articleId), String.valueOf(userId));
-            redisTemplate.exec();  //执行事务
+            result = redisTemplate.opsForSet().add(String.format("article_%d", articleId), String.valueOf(likedPostId));
+            //redisTemplate.exec();  //执行事务
         } catch (Exception e) {
-            logger.error("点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
-            redisTemplate.discard();  //回滚
+            logger.error("点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
+                    articleId, likedUserId, likedPostId, e.getMessage());
+            //redisTemplate.discard();  //回滚
             throw e;
         }
 
@@ -67,24 +71,26 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 取消点赞
      *
-     * @param userId    用户ID
+     * @param likedUserId 被点赞用户ID
+     * @param likedPostId 点赞用户
      * @param articleId 文章ID
      * @return
      */
-    public Long unlikeArticle(Long articleId, Long userId) {
-        validateParam(articleId, userId);
-        Long result = 0L;
+    public Long unlikeArticle(Long articleId, Long likedUserId, Long likedPostId) {
+        validateParam(articleId, likedUserId, likedPostId);
+        Long result;
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数-1
-            redisTemplate.opsForValue().decrement(String.valueOf(userId), 1);
+            redisTemplate.opsForValue().decrement(String.valueOf(likedUserId), 1);
             //2.用户喜欢的文章-1
-            redisTemplate.opsForSet().remove(String.format("user_%d", userId), String.valueOf(articleId));
+            redisTemplate.opsForSet().remove(String.format("user_%d", likedPostId), String.valueOf(articleId));
             //3.取消用户某篇文章的点赞数
-            result = redisTemplate.opsForSet().remove(String.valueOf(articleId), String.valueOf(userId));
+            result = redisTemplate.opsForSet().remove(String.format("article_%d", articleId), String.valueOf(likedPostId));
             redisTemplate.exec(); //执行命令
         } catch (Exception e) {
-            logger.error("取消点赞执行过程中出错将进行回滚，articleId:{}，userId:{}，errorMsg:{}", articleId, userId, e.getMessage());
+            logger.error("取消点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
+                    articleId, likedUserId, likedPostId, e.getMessage());
             redisTemplate.discard();
             throw e;
         }
@@ -100,29 +106,29 @@ public class RedisServiceImpl implements RedisService {
      */
     public Long countArticleLike(Long articleId) {
         validateParam(articleId);
-        return redisTemplate.opsForSet().size(String.valueOf(articleId));
+        return redisTemplate.opsForSet().size(String.format("article_%d", articleId));
     }
 
     /**
      * 统计用户总的文章点赞数
      *
-     * @param userId
+     * @param likedUserId
      * @return
      */
-    public Long countUserLike(Long userId) {
-        validateParam(userId);
-        return redisTemplate.opsForSet().size(String.valueOf(userId));
+    public Long countUserLike(Long likedUserId) {
+        validateParam(likedUserId);
+        return Long.parseLong((String) redisTemplate.opsForValue().get(String.valueOf(likedUserId)));
     }
 
     /**
      * 获取用户点赞的文章
      *
-     * @param userId 用户ID
+     * @param likedPostId
      * @return
      */
-    public List<Long> getUserLikeArticleIds(Long userId) {
-        validateParam(userId);
-        String userKey = String.format("user_%d", userId);
+    public List<Long> getUserLikeArticleIds(Long likedPostId) {
+        validateParam(likedPostId);
+        String userKey = String.format("user_%d", likedPostId);
         Set<String> articleIdSet = redisTemplate.opsForSet().members(userKey);
         return articleIdSet.stream()
                 .map(s -> Long.parseLong(s)).collect(Collectors.toList());

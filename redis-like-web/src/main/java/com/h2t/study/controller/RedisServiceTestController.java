@@ -18,14 +18,20 @@ public class RedisServiceTestController {
     @Resource
     private RedisService redisService;
 
-    @PostMapping("/{articleId}/{userId}")
+    @PostMapping("/{articleId}/{likedUserId}/{likedPoseId}")
     public Object likeArticle(@PathVariable("articleId") Long articleId,
-                              @PathVariable("userId") Long userId) {
-        return redisService.likeArticle(articleId, userId);
+                              @PathVariable("likedUserId") Long likedUserId,
+                              @PathVariable("likedPoseId") Long likedPoseId) {
+        return redisService.likeArticle(articleId, likedUserId, likedPoseId);
     }
 
-    @GetMapping("/test")
-    public Object test() {
-        return "test";
+    @GetMapping("/{userId}")
+    public Object getUserLikeArticleIds(@PathVariable("userId") Long userId) {
+        return redisService.getUserLikeArticleIds(userId);
+    }
+
+    @GetMapping("/total/{userId}/count")
+    public Object countUserLike(@PathVariable Long userId) {
+        return redisService.countUserLike(userId);
     }
 }

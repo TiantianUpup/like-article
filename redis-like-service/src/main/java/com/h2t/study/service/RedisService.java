@@ -1,7 +1,6 @@
 package com.h2t.study.service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * redis服务接口
@@ -14,20 +13,22 @@ public interface RedisService {
     /**
      * 用户点赞某篇文章
      *
-     * @param userId 用户ID
+     * @param likedUserId 被点赞用户ID
+     * @param likedPostId 点赞用户
      * @param articleId 文章ID
      * @return
      */
-    Long likeArticle(Long articleId, Long userId);
+    Long likeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
     /**
      * 取消点赞
      *
-     * @param userId 用户ID
+     * @param likedUserId 被点赞用户ID
+     * @param likedPostId 点赞用户
      * @param articleId 文章ID
      * @return
      */
-    Long unlikeArticle(Long articleId, Long userId);
+    Long unlikeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
     /**
      * 统计某篇文章总点赞数
@@ -40,16 +41,16 @@ public interface RedisService {
     /**
      * 统计用户总的文章点赞数
      *
-     * @param userId
+     * @param likedUserId
      * @return
      * */
-    Long countUserLike(Long userId);
+    Long countUserLike(Long likedUserId);
 
     /**
      * 获取用户点赞的文章
      *
-     * @param userId 用户ID
+     * @param likedPostId 点赞用户ID
      * @return
      */
-    List<Long> getUserLikeArticleIds(Long userId);
+    List<Long> getUserLikeArticleIds(Long likedPostId);
 }

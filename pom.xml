@@ -102,6 +102,12 @@
                 <version>2.0.5.RELEASE</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.9.8</version>
+            </dependency>
+
             <!--modules-->
             <dependency>
                 <groupId>com.h2t.study</groupId>

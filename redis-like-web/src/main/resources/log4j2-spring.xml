@@ -47,8 +47,6 @@
         </AsyncLogger>
 
         <Root level="INFO">
-            <!--<AppenderRef ref="RollingRandomAccessFile"/>-->
-            <!--<AppenderRef ref="RollingRandomAccessFile2"/>-->
             <AppenderRef ref="CONSOLE"/>
         </Root>
     </Loggers>

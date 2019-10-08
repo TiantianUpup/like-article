@@ -1,8 +1,11 @@
 package com.h2t.study.po;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.h2t.study.converter.LocalDateTimeConverter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 基本PO字段
@@ -22,15 +25,18 @@ public class BasePO {
     protected Integer deleted = 0;
 
     @TableField(value = "gmt_create", exist = true)
-    protected Date gmtCreate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    protected LocalDateTime gmtCreate;
 
     @TableField(value = "gmt_modified", exist = true)
-    protected Date gmtModified;
+    @JsonSerialize(using = LocalDateTimeConverter.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    protected LocalDateTime gmtModified;
 
     public BasePO() {
     }
 
-    public BasePO(Long id, Integer deleted, Date gmtCreate, Date gmtModify) {
+    public BasePO(Long id, Integer deleted, LocalDateTime gmtCreate, LocalDateTime gmtModify) {
         this.id = id;
         this.deleted = deleted;
         this.gmtCreate = gmtCreate;
@@ -46,19 +52,19 @@ public class BasePO {
         this.id = id;
     }
 
-    public Date getGmtCreate() {
+    public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public LocalDateTime getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(LocalDateTime gmtModified) {
         this.gmtModified = gmtModified;
     }
 
