@@ -19,7 +19,7 @@ public class MpGenerator {
     /**
      * 包名
      */
-    private static final String PACKAGE_NAME = "";
+    private static final String PACKAGE_NAME = "com.h2t.study";
 
     /**
      * 代码生成路径
@@ -29,7 +29,7 @@ public class MpGenerator {
     /**
      * 代码注释作者
      */
-    private static final String AUTHOR = "";
+    private static final String AUTHOR = "hetiantian";
 
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private static final String HOST = "localhost";
@@ -37,9 +37,9 @@ public class MpGenerator {
     /**
      * 数据库信息
      */
-    private static final String DATABASE = "";
+    private static final String DATABASE = "article-like";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "123456";
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE
             + "?characterEncoding=UTF8&serverTimezone=UTC";
 

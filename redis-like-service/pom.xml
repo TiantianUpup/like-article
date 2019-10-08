@@ -54,5 +54,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2t.study</groupId>
+            <artifactId>redis-like-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2t.study</groupId>
+            <artifactId>redis-like-dao</artifactId>
+        </dependency>
     </dependencies>
 </project>

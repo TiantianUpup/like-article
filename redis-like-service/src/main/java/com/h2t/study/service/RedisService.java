@@ -28,7 +28,7 @@ public interface RedisService {
      * @param articleId 文章ID
      * @return
      */
-    Long unlikeArticle(Long articleId, Long likedUserId, Long likedPostId);
+    List<Long> unlikeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
     /**
      * 统计某篇文章总点赞数
