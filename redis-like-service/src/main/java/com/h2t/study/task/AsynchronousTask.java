@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -34,46 +36,68 @@ public class AsynchronousTask {
     /**
      * 用户点赞某篇文章数据落库
      *
-     * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户
      * @param articleId   文章ID
      */
     @Transactional(rollbackFor = Exception.class)
-    public void likeArticleToDB(Long articleId, Long likedUserId, Long likedPostId) {
-        //1.文章总点赞数落库+1
-        Article article = articleService.getById(articleId);
-        if (article == null) {
-            logger.error("点赞文章不存在，articleId{}", articleId);
-            throw new CustomException(ErrorCodeEnum.Object_can_not_found);
-        }
+    public void likeArticleToDB(Long articleId, Long likedPostId) {
+        new Thread(() -> {
+            try {
+                //1.文章总点赞数落库+1
+                Article article = articleService.getById(articleId);
+                if (article == null) {
+                    logger.error("点赞文章不存在，articleId{}", articleId);
+                    throw new CustomException(ErrorCodeEnum.Object_can_not_found);
+                }
 
-        //使用AtomicLong进行自增操作
-        AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-        article.setTotalLikeCount(atomicLong.getAndIncrement());
-        articleService.modifyById(article);
-        //2.用户点赞文章关联
-        UserLikeArticle userLikeArticle = new UserLikeArticle();
-        userLikeArticle.setUserId(likedPostId);
-        userLikeArticle.setArticleId(articleId);
-        userLikeArticleService.insert(userLikeArticle);
+                //使用AtomicLong进行自增操作
+                AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
+                article.setTotalLikeCount(atomicLong.getAndIncrement());
+                articleService.modifyById(article);
+                //2.用户点赞文章关联
+                UserLikeArticle userLikeArticle = new UserLikeArticle();
+                userLikeArticle.setUserId(likedPostId);
+                userLikeArticle.setArticleId(articleId);
+                userLikeArticleService.insert(userLikeArticle);
+            } catch (Exception e) {
+                logger.error("点赞入库出错，exception:{}", e);
+                throw e;
+            }
+
+        }).start();
+
     }
 
-    public void unlikeArticleToDB(Long articleId, Long likedUserId, Long likedPostId) {
-        //1.文章总点赞数落库-1
-        Article article = articleService.getById(articleId);
-        if (article == null) {
-            logger.error("点赞文章不存在，articleId{}", articleId);
-            throw new CustomException(ErrorCodeEnum.Object_can_not_found);
-        }
+    /**
+     * 用户取消点赞某篇文章数据落库
+     *
+     * @param likedPostId 点赞用户
+     * @param articleId   文章ID
+     */
+    public void unlikeArticleToDB(Long articleId, Long likedPostId) {
+        new Thread(() -> {
+            try {
+                //1.文章总点赞数落库-1
+                Article article = articleService.getById(articleId);
+                if (article == null) {
+                    logger.error("取消点赞文章不存在，articleId{}", articleId);
+                    throw new CustomException(ErrorCodeEnum.Object_can_not_found);
+                }
 
-        //使用AtomicLong进行自增操作
-        AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-        article.setTotalLikeCount(atomicLong.getAndDecrement());
-        articleService.modifyById(article);
-        //2.取消用户点赞文章关联
-        UserLikeArticle userLikeArticle = new UserLikeArticle();
-        userLikeArticle.setUserId(likedPostId);
-        userLikeArticle.setArticleId(articleId);
-        userLikeArticleService.delete(userLikeArticle);
+                //使用AtomicLong进行自增操作
+                AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
+                article.setTotalLikeCount(atomicLong.getAndDecrement());
+                articleService.modifyById(article);
+                //2.取消用户点赞文章关联
+                UserLikeArticle userLikeArticle = new UserLikeArticle();
+                userLikeArticle.setUserId(likedPostId);
+                userLikeArticle.setArticleId(articleId);
+                userLikeArticleService.delete(userLikeArticle);
+            } catch (Exception e) {
+                logger.error("取消点赞入库出错，exception:{}", e);
+                throw e;
+            }
+
+        }).start();
     }
 }

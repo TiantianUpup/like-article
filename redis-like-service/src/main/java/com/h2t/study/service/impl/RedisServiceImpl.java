@@ -3,6 +3,7 @@ package com.h2t.study.service.impl;
 import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
+import com.h2t.study.task.AsynchronousTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +30,9 @@ public class RedisServiceImpl implements RedisService {
     @Resource
     private RedisTemplate redisTemplate;
 
+    @Resource
+    private AsynchronousTask asynchronousTask;
+
     /**
      * 指定序列化方式、开启事务
      */
@@ -47,10 +51,9 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
-        validateParam(articleId, likedUserId, likedPostId);
-
+        validateParam(articleId, likedUserId, likedPostId);  //参数验证
+        asynchronousTask.likeArticleToDB(articleId, likedPostId);  //异步入库
         List<Long> result;
-
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数+1
@@ -81,6 +84,8 @@ public class RedisServiceImpl implements RedisService {
     public List<Long> unlikeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);
         List<Long> result;
+
+        asynchronousTask.unlikeArticleToDB(articleId, likedPostId);  //异步入库任务
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数-1
