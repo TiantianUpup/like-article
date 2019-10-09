@@ -52,8 +52,11 @@ public class RedisServiceImpl implements RedisService {
      */
     public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
+        logger.info("点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
         asynchronousTask.likeArticleToDB(articleId, likedPostId);  //异步入库
+
         List<Long> result;
+        logger.info("点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数+1
@@ -63,6 +66,7 @@ public class RedisServiceImpl implements RedisService {
             //3.文章点赞数+1
             redisTemplate.opsForSet().add(String.format("article_%d", articleId), String.valueOf(likedPostId));
             result = redisTemplate.exec();  //执行事务
+            logger.info("取消点赞数据存入redis结束，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         } catch (Exception e) {
             logger.error("点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
                     articleId, likedUserId, likedPostId, e.getMessage());
@@ -85,7 +89,10 @@ public class RedisServiceImpl implements RedisService {
         validateParam(articleId, likedUserId, likedPostId);
         List<Long> result;
 
+        logger.info("取消点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
         asynchronousTask.unlikeArticleToDB(articleId, likedPostId);  //异步入库任务
+
+        logger.info("取消点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数-1
@@ -95,6 +102,7 @@ public class RedisServiceImpl implements RedisService {
             //3.取消用户某篇文章的点赞数
             redisTemplate.opsForSet().remove(String.format("article_%d", articleId), String.valueOf(likedPostId));
             result = redisTemplate.exec(); //执行命令
+            logger.info("取消点赞数据存入redis结束，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         } catch (Exception e) {
             logger.error("取消点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
                     articleId, likedUserId, likedPostId, e.getMessage());
