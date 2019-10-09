@@ -58,6 +58,12 @@ public class RedisServiceImpl implements RedisService {
     public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
         logger.info("点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
+
+        //只有未点赞的用户才可以进行点赞
+        if (redisTemplate.opsForSet().isMember(String.format("article_%d", articleId), String.valueOf(likedPostId))) {
+            logger.error("该文章已被当前用户点赞，重复点赞，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
+            throw new CustomException(ErrorCodeEnum.Like_article_is_exist);
+        }
         asynchronousTask.likeArticleToDB(articleId, likedPostId);  //异步入库
 
         List<Long> result;
@@ -95,6 +101,12 @@ public class RedisServiceImpl implements RedisService {
         validateParam(articleId, likedUserId, likedPostId);
         List<Long> result;
 
+        //只有点赞的用户才可以取消点赞
+        if (!redisTemplate.opsForSet().isMember(String.format("user_%d", likedUserId), String.valueOf(articleId))) {
+            logger.error("该文章未被当前用户点赞，不可以进行取消点赞操作，articleId:{}，likedUserId:{}，likedPostId:{}",
+                    articleId, likedUserId, likedPostId);
+            throw new CustomException(ErrorCodeEnum.Unlike_article_not_exist);
+        }
         logger.info("取消点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
         asynchronousTask.unlikeArticleToDB(articleId, likedPostId);  //异步入库任务
 

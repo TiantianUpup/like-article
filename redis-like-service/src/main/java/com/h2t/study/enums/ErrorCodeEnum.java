@@ -14,7 +14,9 @@ public enum ErrorCodeEnum {
     Param_does_not_exist("0001","查找参数不存在"),
     Param_does_not_correct("0002","所传参数格式不正确"),
     Param_can_not_null("0003", "传参不为null"),
-    Object_can_not_found("0004", "查找对象不存在");
+    Object_can_not_found("0004", "查找对象不存在"),
+    Unlike_article_not_exist("0005", "该文章未被当前用户点赞"),
+    Like_article_is_exist("0006", "该文章已被当前用户点赞，重复点赞");
 
     ErrorCodeEnum(String errorCode, String errorMsg) {
         this.errorCode = errorCode;
