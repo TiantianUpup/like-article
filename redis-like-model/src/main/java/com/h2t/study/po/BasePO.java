@@ -25,6 +25,7 @@ public class BasePO {
     protected Integer deleted = 0;
 
     @TableField(value = "gmt_create", exist = true)
+    @JsonSerialize(using = LocalDateTimeConverter.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime gmtCreate;
 

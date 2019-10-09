@@ -23,6 +23,10 @@ public class Article extends BasePO {
     @TableField(value = "total_like_count", exist = true)
     private Long totalLikeCount;
 
+    public Article() {
+        super();
+    }
+
     public Blob getContent() {
         return content;
     }

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -45,6 +43,7 @@ public class AsynchronousTask {
             try {
                 //1.文章总点赞数落库+1
                 Article article = articleService.getById(articleId);
+                System.out.println("article修改前: " + article.getTotalLikeCount());
                 if (article == null) {
                     logger.error("点赞文章不存在，articleId{}", articleId);
                     throw new CustomException(ErrorCodeEnum.Object_can_not_found);
@@ -52,7 +51,7 @@ public class AsynchronousTask {
 
                 //使用AtomicLong进行自增操作
                 AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-                article.setTotalLikeCount(atomicLong.getAndIncrement());
+                article.setTotalLikeCount(atomicLong.incrementAndGet());
                 articleService.modifyById(article);
                 //2.用户点赞文章关联
                 UserLikeArticle userLikeArticle = new UserLikeArticle();
@@ -86,7 +85,7 @@ public class AsynchronousTask {
 
                 //使用AtomicLong进行自增操作
                 AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-                article.setTotalLikeCount(atomicLong.getAndDecrement());
+                article.setTotalLikeCount(atomicLong.decrementAndGet());
                 articleService.modifyById(article);
                 //2.取消用户点赞文章关联
                 UserLikeArticle userLikeArticle = new UserLikeArticle();

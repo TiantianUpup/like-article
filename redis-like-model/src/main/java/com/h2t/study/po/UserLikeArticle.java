@@ -12,13 +12,13 @@ public class UserLikeArticle extends BasePO {
     /**
      * 用户ID
      */
-    @TableField(value = "userId", exist = true)
+    @TableField(value = "user_id", exist = true)
     private Long userId;
 
     /**
      * 文章ID
      */
-    @TableField(value = "articleId", exist = true)
+    @TableField(value = "article_id", exist = true)
     private Long articleId;
 
     public Long getUserId() {

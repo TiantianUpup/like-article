@@ -7,6 +7,7 @@ import com.h2t.study.task.AsynchronousTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,11 @@ public class RedisServiceImpl implements RedisService {
     @PostConstruct
     public void init() {
         redisTemplate.setEnableTransactionSupport(true);
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        RedisSerializer redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(redisSerializer);
+        redisTemplate.setValueSerializer(redisSerializer);
+        redisTemplate.setHashKeySerializer(redisSerializer);
+        redisTemplate.setHashValueSerializer(redisSerializer);
     }
 
     /**
@@ -61,6 +66,7 @@ public class RedisServiceImpl implements RedisService {
         try {
             //1.用户总点赞数+1
             redisTemplate.opsForValue().increment(String.valueOf(likedUserId), 1);
+
             //2.用户喜欢的文章+1
             redisTemplate.opsForSet().add(String.format("user_%d", likedPostId), String.valueOf(articleId));
             //3.文章点赞数+1
@@ -132,7 +138,9 @@ public class RedisServiceImpl implements RedisService {
      */
     public Long countUserLike(Long likedUserId) {
         validateParam(likedUserId);
-        return Long.parseLong((String) redisTemplate.opsForValue().get(String.valueOf(likedUserId)));
+        String result = (String) redisTemplate.opsForValue().get(String.valueOf(likedUserId));
+
+        return result == null ? 0 : Long.parseLong(result);
     }
 
     /**

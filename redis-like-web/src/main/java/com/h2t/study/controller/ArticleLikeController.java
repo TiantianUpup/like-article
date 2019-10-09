@@ -1,12 +1,13 @@
 package com.h2t.study.controller;
 
+import com.h2t.study.service.ArticleService;
 import com.h2t.study.service.RedisService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 /**
- * TODO Description
+ * 点赞文章控制层
  *
  * @author hetiantian
  * @version 1.0
@@ -18,6 +19,12 @@ public class ArticleLikeController {
     @Resource
     private RedisService redisService;
 
+    @Resource
+    private ArticleService articleService;
+
+    /**
+     * 点赞文章
+     */
     @PostMapping("/{articleId}/{likedUserId}/{likedPoseId}")
     public Object likeArticle(@PathVariable("articleId") Long articleId,
                               @PathVariable("likedUserId") Long likedUserId,
@@ -25,13 +32,37 @@ public class ArticleLikeController {
         return redisService.likeArticle(articleId, likedUserId, likedPoseId);
     }
 
-    @GetMapping("/{userId}")
-    public Object getUserLikeArticleIds(@PathVariable("userId") Long userId) {
-        return redisService.getUserLikeArticleIds(userId);
+    /**
+     * 取消点赞
+     */
+    @DeleteMapping("/{articleId}/{likedUserId}/{likedPoseId}")
+    public Object unlikeArticle(@PathVariable("articleId") Long articleId,
+                                @PathVariable("likedUserId") Long likedUserId,
+                                @PathVariable("likedPoseId") Long likedPoseId) {
+        return redisService.unlikeArticle(articleId, likedUserId, likedPoseId);
     }
 
-    @GetMapping("/total/{userId}/count")
+    /**
+     * 获取用户点赞的文章
+     */
+    @GetMapping("/user/{likedPoseId}/like")
+    public Object getUserLikeArticle(@PathVariable("likedPoseId") Long likedPoseId) {
+        return articleService.selectByIds(redisService.getUserLikeArticleIds(likedPoseId));
+    }
+
+    /**
+     * 统计用户总的文章点赞数
+     * */
+    @GetMapping("/total/user/{userId}")
     public Object countUserLike(@PathVariable Long userId) {
         return redisService.countUserLike(userId);
+    }
+
+    /**
+     * 统计某篇文章总点赞数
+     */
+    @GetMapping("/total/article/{articleId}")
+    public Object countArticleLike(@PathVariable("articleId") Long articleId) {
+        return redisService.countArticleLike(articleId);
     }
 }
