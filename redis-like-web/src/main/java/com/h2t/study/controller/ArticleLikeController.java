@@ -53,9 +53,9 @@ public class ArticleLikeController {
     /**
      * 统计用户总的文章点赞数
      * */
-    @GetMapping("/total/user/{userId}")
-    public Object countUserLike(@PathVariable Long userId) {
-        return redisService.countUserLike(userId);
+    @GetMapping("/total/user/{likedUserId}")
+    public Object countUserLike(@PathVariable("likedUserId") Long likedUserId) {
+        return redisService.countUserLike(likedUserId);
     }
 
     /**
