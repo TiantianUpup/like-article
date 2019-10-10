@@ -23,6 +23,12 @@ public class Article extends BasePO {
     @TableField(value = "total_like_count", exist = true)
     private Long totalLikeCount;
 
+    /**
+     * 文章名字
+     */
+    @TableField(value = "article_name", exist = true)
+    private String articleName;
+
     public Article() {
         super();
     }
@@ -41,5 +47,13 @@ public class Article extends BasePO {
 
     public void setTotalLikeCount(Long totalLikeCount) {
         this.totalLikeCount = totalLikeCount;
+    }
+
+    public String getArticleName() {
+        return articleName;
+    }
+
+    public void setArticleName(String articleName) {
+        this.articleName = articleName;
     }
 }
