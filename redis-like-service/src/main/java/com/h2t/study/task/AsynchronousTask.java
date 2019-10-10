@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 异步落库任务
@@ -38,20 +37,18 @@ public class AsynchronousTask {
      * @param articleId   文章ID
      */
     @Transactional(rollbackFor = Exception.class)
-    public void likeArticleToDB(Long articleId, Long likedPostId) {
+    public synchronized void likeArticleToDB(Long articleId, Long likedPostId) {
         new Thread(() -> {
             try {
                 //1.文章总点赞数落库+1
                 Article article = articleService.getById(articleId);
-                System.out.println("article修改前: " + article.getTotalLikeCount());
                 if (article == null) {
                     logger.error("点赞文章不存在，articleId{}", articleId);
                     throw new CustomException(ErrorCodeEnum.Object_can_not_found);
                 }
 
-                //使用AtomicLong进行自增操作
-                AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-                article.setTotalLikeCount(atomicLong.incrementAndGet());
+                Long totalLikeCount = article.getTotalLikeCount();
+                article.setTotalLikeCount(++totalLikeCount);
                 articleService.modifyById(article);
                 //2.用户点赞文章关联
                 UserLikeArticle userLikeArticle = new UserLikeArticle();
@@ -73,7 +70,8 @@ public class AsynchronousTask {
      * @param likedPostId 点赞用户
      * @param articleId   文章ID
      */
-    public void unlikeArticleToDB(Long articleId, Long likedPostId) {
+    @Transactional(rollbackFor = Exception.class)
+    public synchronized void unlikeArticleToDB(Long articleId, Long likedPostId) {
         new Thread(() -> {
             try {
                 //1.文章总点赞数落库-1
@@ -83,9 +81,8 @@ public class AsynchronousTask {
                     throw new CustomException(ErrorCodeEnum.Object_can_not_found);
                 }
 
-                //使用AtomicLong进行自增操作
-                AtomicLong atomicLong = new AtomicLong(article.getTotalLikeCount());
-                article.setTotalLikeCount(atomicLong.decrementAndGet());
+                Long totalLikeCount = article.getTotalLikeCount();
+                article.setTotalLikeCount(--totalLikeCount);
                 articleService.modifyById(article);
                 //2.取消用户点赞文章关联
                 UserLikeArticle userLikeArticle = new UserLikeArticle();
