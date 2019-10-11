@@ -36,7 +36,6 @@ public class AsynchronousTask {
      * @param likedPostId 点赞用户
      * @param articleId   文章ID
      */
-    @Transactional(rollbackFor = Exception.class)
     public synchronized void likeArticleToDB(Long articleId, Long likedPostId) {
         new Thread(() -> {
             try {
@@ -55,6 +54,8 @@ public class AsynchronousTask {
                 userLikeArticle.setUserId(likedPostId);
                 userLikeArticle.setArticleId(articleId);
                 userLikeArticleService.insert(userLikeArticle);
+
+                throw new CustomException(ErrorCodeEnum.Unlike_article_not_exist);
             } catch (Exception e) {
                 logger.error("点赞入库出错，exception:{}", e);
                 throw e;

@@ -3,7 +3,7 @@ package com.h2t.study.service.impl;
 import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
-import com.h2t.study.task.AsynchronousTask;
+import com.h2t.study.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,11 +29,24 @@ import java.util.stream.Collectors;
 public class RedisServiceImpl implements RedisService {
     Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
 
-    @Resource
-    private RedisTemplate redisTemplate;
+    /**
+     * 文章点赞总数key
+     * redis key命名规范推荐使用大写，单词与单词之间使用:
+     */
+    private final String TOTAL_LIKE_COUNT_KEY = "TOTAL:LIKE:COUNT";
+
+    /**
+     * 用户点赞文章key
+     */
+    private final String USER_LIKE_ARTICLE_KEY = "USER:LIKE:ARTICLE";
+
+    /**
+     * 文章被点赞的key
+     */
+    private final String ARTICLE_LIKED_USER_KEY = "ARTICLE:LIKED:USER";
 
     @Resource
-    private AsynchronousTask asynchronousTask;
+    private RedisTemplate redisTemplate;
 
     /**
      * 指定序列化方式、开启事务
@@ -57,26 +71,39 @@ public class RedisServiceImpl implements RedisService {
      */
     public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
-        logger.info("点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
 
         //只有未点赞的用户才可以进行点赞
         if (redisTemplate.opsForSet().isMember(String.format("article_%d", articleId), String.valueOf(likedPostId))) {
             logger.error("该文章已被当前用户点赞，重复点赞，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
             throw new CustomException(ErrorCodeEnum.Like_article_is_exist);
         }
-        asynchronousTask.likeArticleToDB(articleId, likedPostId);  //异步入库
-
         List<Long> result;
         logger.info("点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数+1
-            redisTemplate.opsForValue().increment(String.valueOf(likedUserId), 1);
+            redisTemplate.opsForHash().increment(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), 1);
 
             //2.用户喜欢的文章+1
-            redisTemplate.opsForSet().add(String.format("user_%d", likedPostId), String.valueOf(articleId));
+            System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
+            if (redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)) == null) {
+                Set<Long> articleIdSet = new HashSet<>();
+                articleIdSet.add(articleId);
+                redisTemplate.opsForHash().put(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId), JsonUtil.serialize(articleIdSet));
+            } else {
+                System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
+            }
+
             //3.文章点赞数+1
-            redisTemplate.opsForSet().add(String.format("article_%d", articleId), String.valueOf(likedPostId));
+            if (redisTemplate.opsForHash().get(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId)) == null) {
+                Set<Long> likePostIdSet = new HashSet<>();
+                likePostIdSet.add(likedPostId);
+                redisTemplate.opsForHash().put(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId), JsonUtil.serialize(likePostIdSet));
+            } else {
+                System.out.println("enter...");
+                System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
+            }
+
             result = redisTemplate.exec();  //执行事务
             logger.info("取消点赞数据存入redis结束，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         } catch (Exception e) {
@@ -98,7 +125,7 @@ public class RedisServiceImpl implements RedisService {
      * @return
      */
     public List<Long> unlikeArticle(Long articleId, Long likedUserId, Long likedPostId) {
-        validateParam(articleId, likedUserId, likedPostId);
+        validateParam(articleId, likedUserId, likedPostId);  //参数校验
         List<Long> result;
 
         //只有点赞的用户才可以取消点赞
@@ -107,8 +134,6 @@ public class RedisServiceImpl implements RedisService {
                     articleId, likedUserId, likedPostId);
             throw new CustomException(ErrorCodeEnum.Unlike_article_not_exist);
         }
-        logger.info("取消点赞数据异步入库任务开始，articleId:{}，likedPostId:{}", articleId, likedPostId);
-        asynchronousTask.unlikeArticleToDB(articleId, likedPostId);  //异步入库任务
 
         logger.info("取消点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         redisTemplate.multi();  //开启事务

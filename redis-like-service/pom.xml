@@ -64,5 +64,10 @@
             <groupId>com.h2t.study</groupId>
             <artifactId>redis-like-dao</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2t.study</groupId>
+            <artifactId>redis-like-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

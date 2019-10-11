@@ -12,6 +12,12 @@ import java.sql.Blob;
  */
 public class Article extends BasePO {
     /**
+     * 用户ID
+     */
+    @TableField(value = "user_id", exist = true)
+    private Long userId;
+
+    /**
      * 文章内容
      */
     @TableField(value = "content", exist = true)
@@ -29,8 +35,12 @@ public class Article extends BasePO {
     @TableField(value = "article_name", exist = true)
     private String articleName;
 
-    public Article() {
-        super();
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Blob getContent() {
