@@ -18,7 +18,7 @@ public interface RedisService {
      * @param articleId 文章ID
      * @return
      */
-    List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId);
+    void likeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
     /**
      * 取消点赞

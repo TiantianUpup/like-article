@@ -3,7 +3,7 @@ package com.h2t.study.service.impl;
 import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
-import com.h2t.study.util.JsonUtil;
+import com.h2t.study.util.FastjsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class RedisServiceImpl implements RedisService {
     Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
+
 
     /**
      * 文章点赞总数key
@@ -69,51 +70,37 @@ public class RedisServiceImpl implements RedisService {
      * @param articleId 文章ID
      * @return
      */
-    public List<Long> likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
+    public void likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
-
         //只有未点赞的用户才可以进行点赞
-        if (redisTemplate.opsForSet().isMember(String.format("article_%d", articleId), String.valueOf(likedPostId))) {
-            logger.error("该文章已被当前用户点赞，重复点赞，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
-            throw new CustomException(ErrorCodeEnum.Like_article_is_exist);
-        }
-        List<Long> result;
+        likeArticleLogicValidate(articleId, likedUserId, likedPostId);
+
         logger.info("点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
-        redisTemplate.multi();  //开启事务
         try {
             //1.用户总点赞数+1
             redisTemplate.opsForHash().increment(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), 1);
 
             //2.用户喜欢的文章+1
-            System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
-            if (redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)) == null) {
-                Set<Long> articleIdSet = new HashSet<>();
-                articleIdSet.add(articleId);
-                redisTemplate.opsForHash().put(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId), JsonUtil.serialize(articleIdSet));
-            } else {
-                System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
-            }
+            String userLikeResult = (String) redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId));
+            Set<Long> articleIdSet = userLikeResult == null ? new HashSet<>() : FastjsonUtil.deserializeToSet(userLikeResult, Long.class);
+            articleIdSet.add(articleId);
+            redisTemplate.opsForHash().put(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId), FastjsonUtil.serialize(articleIdSet));
 
             //3.文章点赞数+1
-            if (redisTemplate.opsForHash().get(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId)) == null) {
-                Set<Long> likePostIdSet = new HashSet<>();
-                likePostIdSet.add(likedPostId);
-                redisTemplate.opsForHash().put(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId), JsonUtil.serialize(likePostIdSet));
-            } else {
-                System.out.println("enter...");
-                System.out.println(redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)));
-            }
+            String articleLikedResult = (String) redisTemplate.opsForHash().get(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId));
+            Set<Long> likePostIdSet = articleLikedResult == null ? new HashSet<>() : FastjsonUtil.deserializeToSet(articleLikedResult, Long.class);
+            System.out.println("print...");
+            System.out.println(likePostIdSet);
+            likePostIdSet.add(likedPostId);
+            System.out.println(likePostIdSet);
+            redisTemplate.opsForHash().put(ARTICLE_LIKED_USER_KEY, String.valueOf(articleId), FastjsonUtil.serialize(likePostIdSet));
 
-            result = redisTemplate.exec();  //执行事务
             logger.info("取消点赞数据存入redis结束，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
         } catch (Exception e) {
             logger.error("点赞执行过程中出错将进行回滚，articleId:{}，likedUserId:{}，likedPostId:{}，errorMsg:{}",
                     articleId, likedUserId, likedPostId, e.getMessage());
-            redisTemplate.discard();  //回滚
             throw e;
         }
-
-        return result;
     }
 
     /**
@@ -205,6 +192,23 @@ public class RedisServiceImpl implements RedisService {
             if (null == param) {
                 logger.error("入参存在null值");
                 throw new CustomException(ErrorCodeEnum.Param_can_not_null);
+            }
+        }
+    }
+
+    /**
+     * 点赞文章逻辑校验
+     *
+     * @throws
+     */
+    private void likeArticleLogicValidate(Long articleId, Long likedUserId, Long likedPostId) {
+        Set<Long> set = FastjsonUtil.deserializeToSet((String) redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId)), Long.class);
+        if (set == null) {
+            return;
+        } else {
+            if (set.contains(articleId)) {
+                logger.error("该文章已被当前用户点赞，重复点赞，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
+                throw new CustomException(ErrorCodeEnum.Like_article_is_exist);
             }
         }
     }

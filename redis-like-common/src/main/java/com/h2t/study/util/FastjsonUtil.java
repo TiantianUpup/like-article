@@ -1,6 +1,7 @@
 package com.h2t.study.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  * @version 1.0
  * @Date 2019/10/11 11:12
  */
-public class JsonUtil<T> {
+public class FastjsonUtil {
     /**
      * 序列化
      *
@@ -26,9 +27,11 @@ public class JsonUtil<T> {
      * Set反序列化
      *
      * @param jsonStr 序列化结果
+     * @param clazz 泛型class类
      * @return
      */
-    public static Set deserialize(String jsonStr) {
-        return JSON.parseObject(jsonStr, Set.class);
+    public static <T> Set<T> deserializeToSet(String jsonStr, Class<T> clazz) {
+        return JSON.parseObject(jsonStr, new TypeReference<Set<T>>(clazz) {
+        });
     }
 }

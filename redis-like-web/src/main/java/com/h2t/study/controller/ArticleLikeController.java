@@ -29,7 +29,8 @@ public class ArticleLikeController {
     public Object likeArticle(@PathVariable("articleId") Long articleId,
                               @PathVariable("likedUserId") Long likedUserId,
                               @PathVariable("likedPoseId") Long likedPoseId) {
-        return redisService.likeArticle(articleId, likedUserId, likedPoseId);
+        redisService.likeArticle(articleId, likedUserId, likedPoseId);
+        return articleId;
     }
 
     /**
