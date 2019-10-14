@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/JsonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/controller/ArticleLikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/controller/ArticleLikeController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/redis-like-service/target/" />
     <ignored path="$PROJECT_DIR$/redis-like-web/target/" />
@@ -101,19 +96,19 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="4" />
-          <entry key="java" value="3478" />
+          <entry key="dummy" value="18" />
+          <entry key="java" value="3511" />
           <entry key="md" value="692" />
           <entry key="properties" value="32" />
-          <entry key="txt" value="173" />
+          <entry key="txt" value="236" />
           <entry key="xml" value="23" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3478" />
+          <entry key="JAVA" value="3511" />
           <entry key="Markdown" value="692" />
-          <entry key="PLAIN_TEXT" value="177" />
+          <entry key="PLAIN_TEXT" value="254" />
           <entry key="Properties" value="32" />
           <entry key="XML" value="23" />
         </counts>
@@ -145,17 +140,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2106">
-              <caret line="85" column="54" lean-forward="true" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/Test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+            <state relative-caret-position="-208">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -211,11 +197,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/JsonUtil.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/FastjsonUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+            <state relative-caret-position="741">
+              <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#330#331#0" expanded="true" />
@@ -326,6 +312,7 @@
         <option value="$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/JsonUtil.java" />
         <option value="$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/Test.java" />
         <option value="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" />
+        <option value="$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/FastjsonUtil.java" />
       </list>
     </option>
   </component>
@@ -398,10 +385,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="2" />
-    <option name="width" value="1938" />
-    <option name="height" value="1028" />
+    <option name="x" value="345" />
+    <option name="y" value="206" />
+    <option name="width" value="1400" />
+    <option name="height" value="873" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -558,7 +545,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571033368797" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571042958241" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -687,7 +674,7 @@
       <workItem from="1570583551831" duration="21352000" />
       <workItem from="1570688024435" duration="66000" />
       <workItem from="1570688198670" duration="10466000" />
-      <workItem from="1570789195914" duration="11216000" />
+      <workItem from="1570789195914" duration="12054000" />
     </task>
     <task id="LOCAL-00001" summary="article like count module">
       <created>1569753572443</created>
@@ -822,11 +809,18 @@
       <option name="project" value="LOCAL" />
       <updated>1570688520006</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="update FastjsonUtil.java &amp;&amp; modify likeArticle method">
+      <created>1571033527991</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1571033527991</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79343000" />
+    <option name="totallyTimeSpent" value="80181000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,7 +832,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18390192" />
@@ -851,9 +845,9 @@
       <window_info id="Nl-Palette" order="7" />
       <window_info id="Web" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32899022" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32464713" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.27795875" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27795875" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -906,7 +900,8 @@
     <MESSAGE value="finish README.md" />
     <MESSAGE value="modify dependency version" />
     <MESSAGE value="add articleName in Article.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="add articleName in Article.java" />
+    <MESSAGE value="update FastjsonUtil.java &amp;&amp; modify likeArticle method" />
+    <option name="LAST_COMMIT_MESSAGE" value="update FastjsonUtil.java &amp;&amp; modify likeArticle method" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1247,31 +1242,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/JsonUtil.java">
+    <entry file="file://$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        <state relative-caret-position="251">
+          <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#378#379#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2106">
-          <caret line="85" column="54" lean-forward="true" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+        <state relative-caret-position="-208">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/Test.java">
+    <entry file="file://$PROJECT_DIR$/redis-like-common/src/main/java/com/h2t/study/util/FastjsonUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+        <state relative-caret-position="741">
+          <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#330#331#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
           </folding>
         </state>
       </provider>
