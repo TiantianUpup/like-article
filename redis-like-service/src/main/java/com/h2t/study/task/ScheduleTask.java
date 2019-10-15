@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -37,13 +36,13 @@ public class ScheduleTask {
     /**
      * 用户点赞文章key
      */
-    @Value("user.like.article.key")
+    @Value("${user.like.article.key}")
     private String USER_LIKE_ARTICLE_KEY;
 
     /**
      * 文章被点赞的key
      */
-    @Value("article.liked.user.key")
+    @Value("${article.liked.user.key}")
     private String ARTICLE_LIKED_USER_KEY;
 
     @Resource
