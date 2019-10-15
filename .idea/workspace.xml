@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="">
+    <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="modify RedisServiceImpl.java method implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/task/ScheduleTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/task/ScheduleTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/BaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/BaseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/impl/BaseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/impl/BaseServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/impl/RedisServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/service/impl/RedisServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/task/ScheduleTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/target/classes/com/h2t/study/task/ScheduleTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-like-web/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-web/target/classes/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/redis-like-service/target/" />
     <ignored path="$PROJECT_DIR$/redis-like-web/target/" />
@@ -105,7 +99,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="27" />
-          <entry key="java" value="5264" />
+          <entry key="java" value="5276" />
           <entry key="md" value="692" />
           <entry key="properties" value="111" />
           <entry key="txt" value="283" />
@@ -114,7 +108,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5264" />
+          <entry key="JAVA" value="5276" />
           <entry key="Markdown" value="692" />
           <entry key="PLAIN_TEXT" value="310" />
           <entry key="Properties" value="111" />
@@ -124,7 +118,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="6" />
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="java" value="45" />
           <entry key="md" value="1" />
           <entry key="properties" value="4" />
@@ -137,7 +131,7 @@
           <entry key="CLASS" value="6" />
           <entry key="JAVA" value="45" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="Properties" value="4" />
           <entry key="SQL" value="3" />
           <entry key="XML" value="12" />
@@ -150,8 +144,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="219" selection-start-line="219" selection-end-line="219" />
+            <state relative-caret-position="-1074">
+              <caret line="77" column="117" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="117" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1104#1129#1" expanded="true" />
@@ -163,10 +157,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/BaseServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3224">
-              <caret line="147" column="29" selection-start-line="141" selection-start-column="4" selection-end-line="147" selection-end-column="29" />
+            <state relative-caret-position="468">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -569,7 +563,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571136296535" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571136603093" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../custom-annotation" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -699,7 +693,7 @@
       <workItem from="1570688024435" duration="66000" />
       <workItem from="1570688198670" duration="10466000" />
       <workItem from="1570789195914" duration="23953000" />
-      <workItem from="1571133899188" duration="2180000" />
+      <workItem from="1571133899188" duration="3230000" />
     </task>
     <task id="LOCAL-00001" summary="article like count module">
       <created>1569753572443</created>
@@ -852,7 +846,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94260000" />
+    <option name="totallyTimeSpent" value="95310000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -866,7 +860,7 @@
   <component name="ToolWindowManager">
     <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15069222" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09850905" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -878,7 +872,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32899022" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32464713" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.47480404" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3706607" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1178,13 +1172,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" selection-start-line="8" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="767">
@@ -1281,10 +1268,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="219" selection-start-line="219" selection-end-line="219" />
+        <state relative-caret-position="-1074">
+          <caret line="77" column="117" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="117" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1104#1129#1" expanded="true" />
