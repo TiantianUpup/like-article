@@ -16,7 +16,6 @@ public interface RedisService {
      * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户
      * @param articleId 文章ID
-     * @return
      */
     void likeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
@@ -26,9 +25,8 @@ public interface RedisService {
      * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户
      * @param articleId 文章ID
-     * @return
      */
-    List<Long> unlikeArticle(Long articleId, Long likedUserId, Long likedPostId);
+    void unlikeArticle(Long articleId, Long likedUserId, Long likedPostId);
 
     /**
      * 统计某篇文章总点赞数

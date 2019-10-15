@@ -69,5 +69,10 @@
             <groupId>com.h2t.study</groupId>
             <artifactId>redis-like-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
     </dependencies>
 </project>
