@@ -89,4 +89,12 @@ public interface BaseService<T> extends IService<T> {
      * @return
      * */
     IPage<T> selectPage(T obj, Integer pageNo, Integer pageSize);
+
+    /**
+     * 根据条件查询指定结果，结果只有一个
+     *
+     * @param obj
+     * @return
+     * */
+    T selectOne(T obj);
 }

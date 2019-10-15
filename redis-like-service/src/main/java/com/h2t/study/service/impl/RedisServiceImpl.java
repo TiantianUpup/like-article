@@ -4,8 +4,10 @@ import com.h2t.study.enums.ErrorCodeEnum;
 import com.h2t.study.exception.CustomException;
 import com.h2t.study.service.RedisService;
 import com.h2t.study.util.FastjsonUtil;
+import org.apache.ibatis.annotations.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -29,22 +31,24 @@ import java.util.stream.Collectors;
 public class RedisServiceImpl implements RedisService {
     Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
 
-
     /**
      * 文章点赞总数key
      * redis key命名规范推荐使用大写，单词与单词之间使用:
      */
-    private final String TOTAL_LIKE_COUNT_KEY = "TOTAL:LIKE:COUNT";
+    @Value("total.like.count.key")
+    private String TOTAL_LIKE_COUNT_KEY;
 
     /**
      * 用户点赞文章key
      */
-    private final String USER_LIKE_ARTICLE_KEY = "USER:LIKE:ARTICLE";
+    @Value("user.like.article.key")
+    private String USER_LIKE_ARTICLE_KEY;
 
     /**
      * 文章被点赞的key
      */
-    private final String ARTICLE_LIKED_USER_KEY = "ARTICLE:LIKED:USER";
+    @Value("article.liked.user.key")
+    private String ARTICLE_LIKED_USER_KEY;
 
     @Resource
     private RedisTemplate redisTemplate;

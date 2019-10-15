@@ -111,7 +111,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
      * @return
      * */
     public List<T> selectList(T obj) {
-        Wrapper wrapper = new QueryWrapper<T>(obj);
+        Wrapper<T> wrapper = new QueryWrapper<>(obj);
         return this.list(wrapper);
     }
 
@@ -137,5 +137,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
         Page<T> page = new Page<T>(pageNo, pageSize);
         Wrapper wrapper = new QueryWrapper<T>(obj);
         return this.page(page, wrapper);
+    }
+
+    /**
+     * 根据条件查询指定结果，结果只有一个
+     *
+     * @param obj
+     * @return
+     * */
+    public T selectOne(T obj) {
+        Wrapper<T> wrapper = new QueryWrapper<>(obj);
+        return this.getOne(wrapper);
     }
 }
