@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="modify RedisServiceImpl.java method implementation">
+    <list default="true" id="beecfad5-a580-4466-bd6f-719094e5e574" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java" afterDir="false" />
     </list>
@@ -102,7 +102,7 @@
           <entry key="java" value="5276" />
           <entry key="md" value="692" />
           <entry key="properties" value="111" />
-          <entry key="txt" value="283" />
+          <entry key="txt" value="318" />
           <entry key="xml" value="29" />
         </counts>
       </usages-collector>
@@ -110,7 +110,7 @@
         <counts>
           <entry key="JAVA" value="5276" />
           <entry key="Markdown" value="692" />
-          <entry key="PLAIN_TEXT" value="310" />
+          <entry key="PLAIN_TEXT" value="345" />
           <entry key="Properties" value="111" />
           <entry key="XML" value="29" />
         </counts>
@@ -119,7 +119,7 @@
         <counts>
           <entry key="class" value="6" />
           <entry key="gitignore" value="2" />
-          <entry key="java" value="45" />
+          <entry key="java" value="46" />
           <entry key="md" value="1" />
           <entry key="properties" value="4" />
           <entry key="sql" value="3" />
@@ -129,7 +129,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="6" />
-          <entry key="JAVA" value="45" />
+          <entry key="JAVA" value="46" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="Properties" value="4" />
@@ -144,8 +144,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1074">
-              <caret line="77" column="117" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="117" />
+            <state relative-caret-position="248">
+              <caret line="113" column="140" selection-start-line="113" selection-start-column="140" selection-end-line="113" selection-end-column="140" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1104#1129#1" expanded="true" />
@@ -161,15 +161,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="468">
               <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.10.RELEASE/spring-data-redis-2.1.10.RELEASE.jar!/org/springframework/data/redis/core/HashOperations.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -204,13 +195,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/task/ScheduleTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="44" column="37" selection-start-line="44" selection-start-column="37" selection-end-line="44" selection-end-column="37" />
+            <state relative-caret-position="29">
+              <caret line="62" column="46" lean-forward="true" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1102#1128#1" expanded="true" />
                 <element signature="e#1217#1244#1" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -491,6 +491,16 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="study" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="like-article" type="b2602c69:ProjectViewProjectNode" />
+              <item name="like-article" type="462c0819:PsiDirectoryNode" />
+              <item name="redis-like-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="study" type="462c0819:PsiDirectoryNode" />
               <item name="task" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -563,7 +573,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571136603093" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571138418503" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../custom-annotation" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -693,7 +703,7 @@
       <workItem from="1570688024435" duration="66000" />
       <workItem from="1570688198670" duration="10466000" />
       <workItem from="1570789195914" duration="23953000" />
-      <workItem from="1571133899188" duration="3230000" />
+      <workItem from="1571133899188" duration="4311000" />
     </task>
     <task id="LOCAL-00001" summary="article like count module">
       <created>1569753572443</created>
@@ -842,11 +852,18 @@
       <option name="project" value="LOCAL" />
       <updated>1571123849951</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="git lock on like article method">
+      <created>1571137909619</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1571137909619</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95310000" />
+    <option name="totallyTimeSpent" value="96391000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -860,7 +877,7 @@
   <component name="ToolWindowManager">
     <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09850905" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20660277" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -927,7 +944,8 @@
     <MESSAGE value="add articleName in Article.java" />
     <MESSAGE value="update FastjsonUtil.java &amp;&amp; modify likeArticle method" />
     <MESSAGE value="modify RedisServiceImpl.java method implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify RedisServiceImpl.java method implementation" />
+    <MESSAGE value="git lock on like article method" />
+    <option name="LAST_COMMIT_MESSAGE" value="git lock on like article method" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1179,13 +1197,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Set.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="843">
@@ -1249,18 +1260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/task/ScheduleTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="44" column="37" selection-start-line="44" selection-start-column="37" selection-end-line="44" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1102#1128#1" expanded="true" />
-            <element signature="e#1217#1244#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-web/src/main/java/com/h2t/study/controller/ArticleLikeController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-286">
@@ -1275,10 +1274,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/task/ScheduleTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="62" column="46" lean-forward="true" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1102#1128#1" expanded="true" />
+            <element signature="e#1217#1244#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/RedisService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/redis-like-service/src/main/java/com/h2t/study/service/impl/RedisServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1074">
-          <caret line="77" column="117" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="117" />
+        <state relative-caret-position="248">
+          <caret line="113" column="140" selection-start-line="113" selection-start-column="140" selection-end-line="113" selection-end-column="140" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1104#1129#1" expanded="true" />

@@ -112,7 +112,6 @@ public class RedisServiceImpl implements RedisService {
             //只有点赞的用户才可以取消点赞
             unlikeArticleLogicValidate(articleId, likedUserId, likedPostId);
             Long totalLikeCount = Long.parseLong((String)redisTemplate.opsForHash().get(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId)));
-            --totalLikeCount;
             redisTemplate.opsForHash().put(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), String.valueOf(--totalLikeCount));
 
             //2.用户喜欢的文章-1
