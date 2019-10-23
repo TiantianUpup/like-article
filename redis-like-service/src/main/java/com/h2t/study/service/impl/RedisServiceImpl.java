@@ -75,12 +75,12 @@ public class RedisServiceImpl implements RedisService {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
 
         logger.info("点赞数据存入redis开始，articleId:{}，likedUserId:{}，likedPostId:{}", articleId, likedUserId, likedPostId);
-        synchronized (this) {
-            //只有未点赞的用户才可以进行点赞
-            likeArticleLogicValidate(articleId, likedUserId, likedPostId);
-            //1.用户总点赞数+1
-            redisTemplate.opsForHash().increment(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), 1);
 
+        //只有未点赞的用户才可以进行点赞
+        likeArticleLogicValidate(articleId, likedUserId, likedPostId);
+        //1.用户总点赞数+1
+        redisTemplate.opsForHash().increment(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), 1);
+        synchronized (this) {
             //2.用户喜欢的文章+1
             String userLikeResult = (String) redisTemplate.opsForHash().get(USER_LIKE_ARTICLE_KEY, String.valueOf(likedPostId));
             Set<Long> articleIdSet = userLikeResult == null ? new HashSet<>() : FastjsonUtil.deserializeToSet(userLikeResult, Long.class);
