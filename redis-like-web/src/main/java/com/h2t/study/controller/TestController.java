@@ -14,6 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/hello")
     public Object hello() {
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        throw new IllegalArgumentException();
+                    }
+                }
+        ).start();
         return "hello world";
+    }
+
+    @GetMapping("/test")
+    public Object test() {
+        return "test";
     }
 }

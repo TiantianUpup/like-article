@@ -72,7 +72,7 @@ public class ScheduleTask {
 
     /**
      * 同步某篇文章总的点赞数到MySQL
-     * */
+     */
     private void synchronizeTotalLikeCount(String articleId, Set<Long> userIdSet) {
         Long totalLikeCount = new Long(userIdSet.size());
         Article article = buildArticle(totalLikeCount, articleId);
@@ -84,7 +84,7 @@ public class ScheduleTask {
      *
      * @param articleId
      * @param userIdSet
-     * */
+     */
     private void synchronizeUserLikeArticle(String articleId, Set<Long> userIdSet) {
         for (Long userId : userIdSet) {
             UserLikeArticle userLikeArticle = buildUserLikeArticle(articleId, userId);
@@ -100,7 +100,7 @@ public class ScheduleTask {
      * @param articleId
      * @param userId
      * @return
-     * */
+     */
     private UserLikeArticle buildUserLikeArticle(String articleId, Long userId) {
         UserLikeArticle userLikeArticle = new UserLikeArticle();
         userLikeArticle.setArticleId(Long.parseLong(articleId));
@@ -115,7 +115,7 @@ public class ScheduleTask {
      * @param articleId
      * @param totalLikeCount
      * @return
-     * */
+     */
     private Article buildArticle(Long totalLikeCount, String articleId) {
         Article article = new Article();
         article.setId(Long.parseLong(articleId));

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 项目启动类
- * */
+ */
 @SpringBootApplication
 @EnableScheduling
 public class Runner {

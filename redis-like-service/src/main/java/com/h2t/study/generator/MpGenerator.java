@@ -74,7 +74,7 @@ public class MpGenerator {
      * 全局构造配置类
      *
      * @return
-     * */
+     */
     private static GlobalConfig buildGlobalConfig() {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
@@ -108,7 +108,7 @@ public class MpGenerator {
      * 数据库配置信息
      *
      * @return
-     * */
+     */
     private static DataSourceConfig buildDataSourceConfig() {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(URL);
@@ -120,7 +120,7 @@ public class MpGenerator {
             @Override
             public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
                 //将数据库中timestamp转换成date
-                if ( fieldType.toLowerCase().contains( "timestamp" ) ) {
+                if (fieldType.toLowerCase().contains("timestamp")) {
                     return DbColumnType.DATE;
                 }
                 return (DbColumnType) super.processTypeConvert(globalConfig, fieldType);

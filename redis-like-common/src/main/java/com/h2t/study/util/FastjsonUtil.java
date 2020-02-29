@@ -27,7 +27,7 @@ public class FastjsonUtil {
      * Set反序列化
      *
      * @param jsonStr 序列化结果
-     * @param clazz 泛型class类
+     * @param clazz   泛型class类
      * @return
      */
     public static <T> Set<T> deserializeToSet(String jsonStr, Class<T> clazz) {

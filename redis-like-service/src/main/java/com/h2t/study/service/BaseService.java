@@ -8,9 +8,8 @@ import java.util.List;
 
 /**
  * @Description: 基本业务类接口
- *
  * @Author: hetiantian
- * @Date:2019/8/3 11:46 
+ * @Date:2019/8/3 11:46
  * @Version: 1.0
  */
 public interface BaseService<T> extends IService<T> {
@@ -19,7 +18,7 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param obj
      * @return
-     * */
+     */
     boolean insert(T obj);
 
     /**
@@ -27,12 +26,12 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param objList
      * @return
-     * */
+     */
     boolean insertBatch(List<T> objList);
 
     /**
      * 根据id删除
-     * */
+     */
     boolean modifyById(T obj);
 
     /**
@@ -40,7 +39,7 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param obj
      * @return
-     * */
+     */
     boolean delete(T obj);
 
     /**
@@ -48,7 +47,7 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param idList
      * @return
-     * */
+     */
     boolean deleteByIds(List<Long> idList);
 
     /**
@@ -56,12 +55,12 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param id
      * @return
-     * */
+     */
     boolean deleteById(Long id);
 
     /**
      * 根据id查找
-     * */
+     */
     T selectById(Long id);
 
     /**
@@ -69,7 +68,7 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param obj
      * @return
-     * */
+     */
     List<T> selectList(T obj);
 
     /**
@@ -77,17 +76,17 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param idList
      * @return
-     * */
+     */
     Collection<T> selectByIds(List<Long> idList);
 
     /**
      * 分页查询
      *
-     * @param pageNo 页码
+     * @param pageNo   页码
      * @param pageSize 页数
      * @param obj
      * @return
-     * */
+     */
     IPage<T> selectPage(T obj, Integer pageNo, Integer pageSize);
 
     /**
@@ -95,6 +94,6 @@ public interface BaseService<T> extends IService<T> {
      *
      * @param obj
      * @return
-     * */
+     */
     T selectOne(T obj);
 }

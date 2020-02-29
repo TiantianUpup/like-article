@@ -80,10 +80,10 @@ public class BasePO {
     @Override
     public String toString() {
         return "BasePO{" +
-            "id=" + id +
-            ", deleted=" + deleted +
-            ", gmtCreate=" + gmtCreate +
-            ", gmtModified=" + gmtModified +
-            '}';
+                "id=" + id +
+                ", deleted=" + deleted +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                '}';
     }
 }

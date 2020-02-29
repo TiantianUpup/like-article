@@ -69,7 +69,7 @@ public class RedisServiceImpl implements RedisService {
      *
      * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户
-     * @param articleId 文章ID
+     * @param articleId   文章ID
      */
     public void likeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数验证
@@ -101,7 +101,7 @@ public class RedisServiceImpl implements RedisService {
      *
      * @param likedUserId 被点赞用户ID
      * @param likedPostId 点赞用户
-     * @param articleId 文章ID
+     * @param articleId   文章ID
      */
     public void unlikeArticle(Long articleId, Long likedUserId, Long likedPostId) {
         validateParam(articleId, likedUserId, likedPostId);  //参数校验
@@ -111,7 +111,7 @@ public class RedisServiceImpl implements RedisService {
         synchronized (this) {
             //只有点赞的用户才可以取消点赞
             unlikeArticleLogicValidate(articleId, likedUserId, likedPostId);
-            Long totalLikeCount = Long.parseLong((String)redisTemplate.opsForHash().get(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId)));
+            Long totalLikeCount = Long.parseLong((String) redisTemplate.opsForHash().get(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId)));
             redisTemplate.opsForHash().put(TOTAL_LIKE_COUNT_KEY, String.valueOf(likedUserId), String.valueOf(--totalLikeCount));
 
             //2.用户喜欢的文章-1

@@ -25,13 +25,13 @@ public class ResponseHandler {
 
     @ExceptionHandler({CustomException.class})
     public BaseResponse customException(CustomException e, HttpServletRequest request) {
-        logger.error(request.getRequestURI() + ":服务运行异常",e);
+        logger.error(request.getRequestURI() + ":服务运行异常", e);
         return BaseResponse.fail(e.getErrorCodeEnum().getErrorCode(), e.getErrorCodeEnum().getErrorMsg());
     }
 
     @ExceptionHandler({Exception.class})
     public BaseResponse otherResponse(Exception e, HttpServletRequest request) {
-        logger.error(request.getRequestURI() + ":自定义异常",e);
+        logger.error(request.getRequestURI() + ":自定义异常", e);
         return BaseResponse.fail(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
                 e.getMessage());
     }

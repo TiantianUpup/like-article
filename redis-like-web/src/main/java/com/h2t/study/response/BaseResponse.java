@@ -10,27 +10,27 @@ package com.h2t.study.response;
 public class BaseResponse<T> {
     /**
      * 返回的data
-     * */
+     */
     private T data;
 
     /**
      * 错误码
-     * */
+     */
     private String errorCode;
 
     /**
      * 错误信息
-     * */
+     */
     private String errorMsg;
 
     /**
      * 是否成功
-     * */
+     */
     private boolean success = false;
 
     /**
      * 出现异常的构造函数
-     * */
+     */
     public BaseResponse(String errorCode, String errorMsg) {
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
@@ -38,7 +38,7 @@ public class BaseResponse<T> {
 
     /**
      * 成功返回的结果
-     * */
+     */
     public BaseResponse(T data) {
         success = true;
         this.data = data;

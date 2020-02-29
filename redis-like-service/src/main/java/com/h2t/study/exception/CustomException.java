@@ -12,7 +12,7 @@ import com.h2t.study.enums.ErrorCodeEnum;
 public class CustomException extends RuntimeException {
     /**
      * 错误码
-     * */
+     */
     private ErrorCodeEnum errorCodeEnum;
 
     public CustomException(ErrorCodeEnum errorCodeEnum) {
